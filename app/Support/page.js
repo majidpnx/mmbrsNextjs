@@ -17,11 +17,11 @@ const Support = () => {
   <div class="max-w-[1366px] mx-auto mt-14 px-4">
  
     <div class="flex flex-col items-center justify-center mb-6 mt-6">
-      <div class="mb-2"> سیبسیب
+      <div class="mb-2">
         {/* <img src="<?php echo get_template_directory_uri(); ?>/public/images/Support/SupportTitle.webp" alt="Support Title" title="Support Title" class="w-[70px] h-[70px]"> */}
       </div>
       <h1 class="text-center text-[24px] font-medium leading-[30px]">
-        How can we provide the best support for you
+        How can we provide the best support for you  سیبسیب
       </h1>
     </div>
 
