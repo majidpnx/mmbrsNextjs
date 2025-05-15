@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['membersgram.com'], // ← اینجا دامنه تصویرت رو اضافه کن
+        domains: ['membersgram.com'],
+          domains: ['api.together.ai'] // ← اینجا دامنه تصویرت رو اضافه کن
       },
       // output: 'export', 
 };
