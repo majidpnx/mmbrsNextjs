@@ -1,66 +1,60 @@
 import React from 'react'
 import Nav from '../Nav/Nav'
-export const dynamic = 'force-static';
+import one from '../Images/Support/one.png'
+import Image from 'next/image'
+import dynamic from 'next/dynamic';
 
-const Support = () => {
+import localFont from 'next/font/local'
+const FaqAccordion = dynamic(() => import('../LandingComponents/FaqAccordion'))
+async function getData() {
+  return [
+    {
+      question: "how to increase telegram members?",
+      answer: "Choose a Growth Strategy :1- Task-Based Growth : Membersgram allows users to perform tasks like joining other channels/groups to earn points.2- Buy Member Packages : If you prefer quick growth, purchase member packages."
+    },
+    {
+      question: "Is Tailwind customizable?",
+      answer: "Yes, Tailwind can be customized using a config file to fit your design system."
+    },
+    {
+      question: "Can I use Tailwind with React?",
+      answer: "Absolutely. Tailwind works seamlessly with React and other frameworks."
+    }
+  ];
+}
+const productSans = localFont({
+  src: '../../public/font/ProductSans-Regular.ttf',
+  display: 'swap',
+})
+export default async function Support() {
+  const data = await getData();
   return (
-    <div className=" w-full h-screen">
-    <Nav />
-    <div className="w-full h-screen flex flex-row justify-center item-center" >
-  
-  {/* <div id="cover" class="fixed inset-0 z-50 flex items-center justify-center bg-white">
-    <img id="loading1" src="<?php echo get_template_directory_uri(); ?>/img/loading3.svg" alt="loading" class="w-60 h-20" />
-  </div> */}
-
-
-
-  <div class="max-w-[1366px] mx-auto mt-14 px-4">
- 
-    <div class="flex flex-col items-center justify-center mb-6 mt-6">
-      <div class="mb-2">
-        {/* <img src="<?php echo get_template_directory_uri(); ?>/public/images/Support/SupportTitle.webp" alt="Support Title" title="Support Title" class="w-[70px] h-[70px]"> */}
+    <div className={`${productSans.className} w-full h-screen`}>
+      <Nav />
+      <div className="w-full h-screen flex flex-col justify-start items-center" >
+        <div>
+          <Image src={one} width='fit' height='fit' />
+        </div>
+        <div className='mt-[56px] text-[32px] font-bold text-[#212121]'>
+          Welcome to Membersgram Support
+        </div>
+        <div>
+          <input type="text" placeholder='Search for your question' className='w-[400px] h-[48px] rounded-4xl border border-[#1976D2] mt-[24px] text-[16px] font-normal text-[#212121] pl-[16px]' />
+        </div>
+        <div className='mt-[72px]  w-full flex flex-col justify-center items-center'>
+          <h1 className='mb-[40px]'>
+            Frequently Questions
+          </h1>
+          <FaqAccordion data={data} />
+        </div>
+  <div className='mt-[72px]  w-full flex flex-col justify-center items-center'>
+          <h1 className='mb-[40px]'>
+         Question categories
+          </h1>
+          categories
+        </div>
       </div>
-      <h1 class="text-center text-[24px] font-medium leading-[30px]">
-        How can we provide the best support for you  سیبسیب
-      </h1>
-    </div>
-
-   
-    <div class="mb-12">
-      <h3 class="text-[20px] font-bold leading-6 mb-4">&nbsp;</h3>
-      <div class="flex flex-wrap justify-center max-w-[1131px] mx-auto">
-      
-        
-          <a href="$href" title="" class="w-[205px] h-[140px] m-[20px] border border-gray-200 rounded-lg flex flex-col items-center justify-center hover:shadow-md transition-shadow duration-200 text-center no-underline\">
-            {/* <img src="" alt="" class="w-[109px] h-[68px]\"> */}
-            <h2 class="text-[14px] font-normal mt-4 text-gray-900\"></h2>
-          </a>
-     
-      </div>
-    </div>
-
-   
-    <div class="mb-20">
-      <h3 class="text-[20px] font-bold leading-6 mb-4"></h3>
-      <div class="flex flex-row items-center mt-10 mb-20">
-        <a href="mailto:membersgramapp@gmail.com" class="flex items-center bg-white h-14 pl-4 hover:bg-gray-300 w-full no-underline">
-          {/* <img src="<?php echo get_template_directory_uri(); ?>/public/images/Support/Email.svg" alt="Send email" class="w-[22px] h-[22px]"> */}
-          <h3 class="ml-4 text-[16px] text-[#616161] font-normal">Send email</h3>
-        </a>
-      </div>
-    </div>
-  </div>
-
-
-
-
-
-
-
-
-    </div>
     </div>
   )
 }
 
-export default Support

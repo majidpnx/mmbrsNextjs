@@ -5,20 +5,27 @@ import React from "react";
 import dynamic from 'next/dynamic';
 import Image from "next/image";
 const Nav = dynamic(() => import('./Nav/Nav'), {
-  ssr: true,  
+  ssr: true,
   loading: () => <p>Loading...</p>,
 })
 const Footer = dynamic(() => import('./Footer/Footer'), {
   // ssr: false, // فقط در کلاینت رندر میشه
   loading: () => <p>Loading...</p>,
 })
+import localFont from 'next/font/local'
 
+const productSans = localFont({
+  src: '../public/font/ProductSans-Regular.ttf',
+  display: 'swap',
+})
 // import AOSWrapper from './LandingComponents/AOSWrapper';
 // import FaqAccordion from './LandingComponents/FaqAccordion';
 // import LandingImageSwitcher from './LandingComponents/LandingImageSwitcher';
 const AOSWrapper = dynamic(() => import('./LandingComponents/AOSWrapper'))
 const FaqAccordion = dynamic(() => import('./LandingComponents/FaqAccordion'))
 const LandingImageSwitcher = dynamic(() => import('./LandingComponents/LandingImageSwitcher'))
+const ScrollToTop = dynamic(() => import('./LandingComponents/ScrollToTop'))
+
 
 
 
@@ -64,13 +71,15 @@ export default async function Home() {
   const data = await getData();
   const logos = await getLogos();
 
- 
+
   return (
     <AOSWrapper>
-      <div className="w-full h-screen  ">
+      <ScrollToTop />
+
+      <div className={`${productSans.className} w-full h-screen`}>
         <Nav />
 
-        <div className="w-full   flex flex-col overflow-x-hidden
+        <div className="w-full   flex flex-col overflow-hidden
           justify-start 
           item-start 
           mt-[62px] 
@@ -81,10 +90,10 @@ export default async function Home() {
           >
 
             <div className="w-full  max-w-100 m-auto flex flex-col justify-center items-start text-center mt-[32px]">
-              <div className="text-[#212121] text-[24px] font-medium">
+              <div className="text-[#212121] text-[24px] font-bold ">
                 Buy Telegram Members | Free Telegram Members
               </div>
-              <div className="text-[#212121] text-[16px] font-light text-center max-w-80 m-auto mt-[24px]">
+              <div className="text-[#212121] text-[16px] font-normal text-center max-w-80 m-auto mt-[24px]">
                 Order as many members as you want and expand your channel/group
               </div>
               <div className="w-full  flex flex-col justify-between items-center">
@@ -154,7 +163,7 @@ export default async function Home() {
               <div className="flex items-start gap-2">
                 <div className="p-2 rounded-md">
                   <Image src={FreeView} alt="free view" className="w-[55px] h-[48px]" />
-                 
+
                 </div>
                 <div>
                   <h3 className="text-[20px]  font-semibold text-gray-800">Free view</h3>
@@ -169,7 +178,7 @@ export default async function Home() {
                 <div className=" p-2 rounded-md">
                   <Image src={FreeCoin} alt="free coins" className="w-[55px] h-[48px]" />
 
-                 
+
                 </div>
                 <div>
                   <h3 className="text-[20px] font-semibold text-gray-800">Free coins</h3>
