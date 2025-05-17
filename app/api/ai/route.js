@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { Together } from 'together-ai';
-
+ dotenv.config(); 
 const together = new Together({
   apiKey: process.env.TOGETHER_API_KEY,
 });
@@ -10,7 +10,7 @@ export async function POST(req) {
 
   try {
     const prompt = body.messages[0].content;
-console.log(prompt);
+
     const response = await together.images.create({
       prompt,
       model: "black-forest-labs/FLUX.1-dev",
