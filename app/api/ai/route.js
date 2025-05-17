@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import { Together } from 'together-ai';
- dotenv.config(); 
+ 
 const together = new Together({
-  apiKey: process.env.TOGETHER_API_KEY,
+  apiKey: '362a84eb9b3e3d7231ab7933e1c85c388080518871975652630eb0bc405b8033',
 });
 
 export async function POST(req) {
