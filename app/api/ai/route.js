@@ -10,7 +10,7 @@ export async function POST(req) {
 
   try {
     const prompt = body.messages[0].content;
-
+ 
     const response = await together.images.create({
       prompt,
       model: "black-forest-labs/FLUX.1-dev",
