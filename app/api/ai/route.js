@@ -8,19 +8,21 @@ const together = new Together({
 export async function POST(req) {
   const body = await req.json();
 
-  try {
-    const prompt = body.messages[0].content;
- 
-    const response = await together.images.create({
-      prompt,
-      model: "black-forest-labs/FLUX.1-dev",
-      steps: 4,
-    });
-
-    return NextResponse.json({
-      result: response,
-    });
-
+ try {
+    if (body.type === 'image') {
+      const response = await together.images.create({
+        prompt: body.prompt,
+        model: 'black-forest-labs/FLUX.1-dev',
+        steps: 4,
+      });
+      return NextResponse.json({ result: response });
+    } else {
+      const response = await together.chat.completions.create({
+        model: 'meta-llama/Llama-3-8b-chat-hf',
+        messages: body.messages,
+      });
+      return NextResponse.json({ result: response });
+    }
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

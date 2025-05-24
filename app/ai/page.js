@@ -1,59 +1,86 @@
-"use client"
-import React, { useState } from 'react';
-import Image from 'next/image';
+'use client';
+import { useState, useRef, useEffect } from 'react';
 
-const Page = () => {
-  const [Prompt, setPrompt] = useState('');
-  const [Result, setResult] = useState(null);
+export default function ChatPage() {
+  const [messages, setMessages] = useState([
+    { role: 'assistant', type: 'text', content: '' }
+  ]);
+  const [input, setInput] = useState('');
+  const chatEndRef = useRef(null);
 
-  const sendMessage = async () => {
-    const res = await fetch('/api/ai', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        messages: [
-          { role: 'user', content: Prompt }
-        ]
-      }),
-    });
+  const handleSend = async () => {
+    if (!input.trim()) return;
 
-    const data = await res.json();
-    setResult(data.result.data[0].url);
-    setPrompt('');
+    const userMessage = { role: 'user', type: 'text', content: input };
+    setMessages((prev) => [...prev, userMessage]);
+    setInput('');
+
+    let response;
+    if (input.startsWith('!image')) {
+      const prompt = input.replace('!image', '').trim();
+      const res = await fetch('/api/ai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt, type: 'image' }),
+      });
+      const data = await res.json();
+      response = { role: 'assistant', type: 'image', content: data.result.data[0].url };
+    } else {
+      const res = await fetch('/api/ai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: [...messages, userMessage],
+          type: 'text'
+        }),
+      });
+      const data = await res.json();
+      response = { role: 'assistant', type: 'text', content: data.result.choices?.[0]?.message?.content || 'خطا!' };
+    }
+
+    setMessages((prev) => [...prev, response]);
   };
 
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
   return (
-    <div className='w-[50%] m-auto mt-[24px]'>
-      <div className="relative w-full mt-[24px]">
-        <input
-          onChange={(e) => setPrompt(e.target.value)}
-          value={Prompt}
-          type="text"
-          placeholder=" "
-          id="search"
-          className="peer w-full h-[48px] rounded-[8px] border border-[#E5E5E5] text-[16px] font-normal text-[#212121] pl-[16px] pt-[1px] focus:outline-none focus:ring-0 focus:border-[#1976D2]"
-        />
-        <label
-          htmlFor="search"
-          className="absolute text-[#999] text-[14px] left-[16px] top-[14px] transition-all peer-placeholder-shown:top-[14px] peer-placeholder-shown:text-[16px] peer-placeholder-shown:text-[#999] peer-focus:top-[-8px] peer-focus:text-[14px] peer-focus:text-[#1976D2] bg-white px-[4px]"
-        >
-          Search in questions
-        </label>
+    <div className="max-w-2xl mx-auto p-4 h-screen flex flex-col">
+      <div className="flex-1 overflow-y-auto border rounded-lg p-4 space-y-2 bg-white shadow">
+        {messages.map((msg, i) => (
+          <div
+            key={i}
+            className={`p-2 rounded-lg max-w-[80%] text-right ${
+              msg.role === 'user' ? 'bg-blue-100 self-end' : 'bg-gray-100 self-start'
+            }`}
+          >
+            {msg.type === 'image' ? (
+              <img src={msg.content} alt="Generated" className="rounded-md max-w-full h-auto" />
+            ) : (
+              <pre className="whitespace-pre-wrap">{msg.content}</pre>
+            )}
+          </div>
+        ))}
+        <div ref={chatEndRef} />
       </div>
 
-      <button onClick={sendMessage} className='border-amber-100 bg-[#f5f5f5] w-full mt-[24px]'>
-        send
-      </button>
-
-      <div className="mt-4">
-        {Result ? (
-          <Image src={Result} alt="result" width={400} height={300} />
-        ) : (
-          'no result'
-        )}
+      <div className="mt-4 flex">
+        <input
+          type="text"
+          className="flex-1 border border-gray-300 rounded-l-md px-4 py-2 outline-none focus:ring-2 focus:ring-blue-400"
+          placeholder="پیام بنویس یا !image برای تصویر"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+        />
+        <button
+          onClick={handleSend}
+          className="bg-blue-500 text-white px-4 py-2 rounded-r-md hover:bg-blue-600"
+        >
+          ارسال
+        </button>
       </div>
     </div>
   );
-};
-
-export default Page;
+}
