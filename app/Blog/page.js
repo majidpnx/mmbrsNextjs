@@ -9,6 +9,7 @@ import BlogCard from './BlogCard.js'
 import Footer from '../Footer/Footer'
 import { useState, useEffect, useRef } from 'react';
 import Loading3 from '../Images/Landing/loading3.svg';
+import Navigation from '../components/Navigation';
 
 import useStore from '../store/useStore'
 const Blog = () => {
@@ -57,7 +58,7 @@ const Blog = () => {
     <div className="w-full h-screen flex flex-col justify-between items-center">
 
       <div className="w-full  ">
-        <Nav />
+        <Navigation />
         <div className="w-full h-fit flex flex-row justify-center item-center text-2xl mt-[24px]" >
           Membersgram Blog
 
