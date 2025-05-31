@@ -78,3 +78,13 @@ hr{
 .animate-fade-in-up {
   animation: fade-in-up 1s ease-in-out forwards;
 }
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+
+
