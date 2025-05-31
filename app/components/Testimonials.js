@@ -62,7 +62,7 @@ const Testimonials = () => {
                 {testimonial.content}
               </p>
 
-              <div className="flex items-center">
+              {/* <div className="flex items-center ">
                 <Image
                   src={testimonial.image}
                   alt={testimonial.name}
@@ -76,7 +76,23 @@ const Testimonials = () => {
                     {testimonial.role} at {testimonial.company}
                   </div>
                 </div>
-              </div>
+              </div> */}
+
+              <div className="flex items-center">
+  <Image
+    src={testimonial.image}
+    alt={testimonial.name}
+    className="w-12 h-12 rounded-full mr-4 object-cover"
+    width={48}
+    height={48}
+  />
+  <div>
+    <div className="font-bold text-gray-900">{testimonial.name}</div>
+    <div className="text-gray-600 text-sm">
+      {testimonial.role} at {testimonial.company}
+    </div>
+  </div>
+</div>
             </div>
           ))}
         </div>
