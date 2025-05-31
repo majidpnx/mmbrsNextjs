@@ -1,7 +1,7 @@
 // "use client"
 // import { Button } from "./components/button";
 // import FAQ from "./components/FAQ";
-import FAQ from './components/faq';
+// import FAQ from './components/faq';
 
 // import { MoveRight } from "lucide-react";
 // import { useState ,useEffect} from 'react';
@@ -36,7 +36,7 @@ export default function HomePage() {
       <HowItWorks />
       <Pricing />
       <Testimonials /> 
-       <FAQ /> 
+       {/* <FAQ />  */}
        <MiniBlog />
        <Footer />
     </div>
